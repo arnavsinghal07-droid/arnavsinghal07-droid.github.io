@@ -1,0 +1,632 @@
+<title>Review Radar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap">
+
+<style>
+:root{
+  --paper:#FFFFFF; --surface:#F4F4F4; --surface-2:#EAEAEA;
+  --dark:#111111; --ink:#000000;
+  --muted:#6E6E6E; --dim:#9B9B9B;
+  --blue:#2563EB; --blue-soft:rgba(37,99,235,.09);
+  --good:#15803D; --warning:#B45309; --critical:#B91C1C;
+  --series:#2563EB;
+  --rule:rgba(0,0,0,.14); --rule-strong:rgba(0,0,0,.34);
+  --display:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --body:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --pad:clamp(18px,4vw,48px);
+}
+*{box-sizing:border-box}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.001ms!important;animation-duration:.001ms!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--blue)}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:var(--pad)}
+
+header{border-bottom:1px solid var(--rule);padding-block:clamp(26px,5vh,44px) clamp(20px,4vh,32px)}
+.kicker{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--series);margin:0 0 10px}
+h1{font-family:var(--display);font-weight:500;font-size:clamp(34px,6vw,58px);line-height:1;margin:0 0 14px;letter-spacing:-.035em;text-transform:uppercase}
+.sub{font-size:16px;max-width:62ch;color:rgba(0,0,0,.86);margin:0}
+.backlink{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:inline-block;margin-bottom:18px}
+.backlink:hover{color:var(--ink)}
+.note{margin:18px 0 0;padding:12px 14px;border-left:2px solid var(--warning);background:rgba(180,83,9,.07);font-size:13.5px;color:rgba(0,0,0,.84);max-width:80ch}
+.note b{color:var(--warning);font-weight:600}
+
+section{padding-block:clamp(32px,5vh,52px);border-top:1px solid var(--rule)}
+h2{font-family:var(--display);font-weight:500;font-size:clamp(23px,3.6vw,33px);margin:0 0 6px;letter-spacing:-.01em}
+.lead{margin:0 0 20px;color:var(--muted);font-size:14.5px;max-width:64ch}
+
+.btn{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;background:none;color:var(--muted);border:1px solid var(--rule);border-radius:3px;padding:9px 14px;cursor:pointer;transition:.2s}
+.btn:hover{color:var(--ink);border-color:var(--rule-strong)}
+.btn.primary{color:var(--paper);background:var(--ink);border-color:var(--ink)}
+.btn.primary:hover{background:var(--blue);border-color:var(--blue)}
+.btn[aria-pressed="true"]{color:var(--blue);border-color:rgba(37,99,235,.5);background:var(--blue-soft)}
+.row{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-bottom:18px}
+
+/* payloads */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.src{border:1px solid var(--rule);background:var(--surface)}
+.src-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:11px 14px;border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase}
+.src-h b{color:var(--ink);font-weight:500}
+.src-h span{color:var(--dim)}
+pre{margin:0;padding:14px;overflow-x:auto;font-family:var(--mono);font-size:11.5px;line-height:1.65;color:rgba(0,0,0,.86)}
+.k{color:var(--blue)} .s{color:var(--warning)} .n{color:#b9a6e8}
+
+/* log */
+.log{background:var(--surface);border:1px solid var(--rule);padding:14px;font-family:var(--mono);font-size:11.5px;line-height:1.8;max-height:250px;overflow-y:auto}
+.log div{display:grid;grid-template-columns:1fr auto auto;gap:14px;color:var(--muted)}
+.log .c200{color:var(--good)} .log .c429{color:var(--warning)} .log .c500{color:var(--critical)}
+.log .ok{color:rgba(0,0,0,.8)}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.stats div{background:var(--paper);padding:15px 16px}
+.stats b{display:block;font-family:var(--display);font-size:clamp(23px,3.4vw,31px);line-height:1;font-variant-numeric:tabular-nums;color:var(--blue)}
+.stats span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin-top:8px;line-height:1.4}
+
+/* normalized table */
+.tblwrap{overflow-x:auto;border:1px solid var(--rule)}
+table{border-collapse:collapse;width:100%;min-width:660px;font-size:13px}
+th{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);text-align:left;padding:10px 12px;border-bottom:1px solid var(--rule);background:var(--surface);position:sticky;top:0}
+td{padding:9px 12px;border-bottom:1px solid var(--rule);color:rgba(0,0,0,.85);vertical-align:top}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--rule);border-radius:3px;padding:2px 7px;color:var(--muted);white-space:nowrap}
+.sent-neg{color:var(--critical)} .sent-pos{color:var(--good)} .sent-neu{color:var(--muted)}
+
+/* small multiples */
+.sm{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:14px}
+.card{border:1px solid var(--rule);background:var(--surface);padding:14px 15px 12px}
+.card.alert{border-color:rgba(185,28,28,.45)}
+.card-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:3px}
+.card-h h3{font-family:var(--body);font-size:14.5px;font-weight:600;margin:0;color:var(--ink)}
+.card-h .tot{font-family:var(--mono);font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.delta{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;display:inline-flex;align-items:center;gap:5px;margin-bottom:9px}
+.delta svg{width:9px;height:9px;flex:none}
+.d-critical{color:var(--critical)} .d-warning{color:var(--warning)} .d-good{color:var(--good)} .d-flat{color:var(--dim)}
+.card svg.spark{display:block;width:100%;height:56px;overflow:visible}
+.axis{font-family:var(--mono);font-size:9px;fill:var(--dim);letter-spacing:.06em}
+.gridline{stroke:rgba(0,0,0,.08);stroke-width:1}
+.sline{fill:none;stroke:var(--series);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.sdot{fill:var(--series);stroke:var(--surface);stroke-width:2}
+.sdot.hot{fill:var(--critical)}
+.hit{fill:transparent;cursor:pointer}
+.card figcaption{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;color:var(--dim);margin-top:7px;text-transform:uppercase}
+
+.tip{position:fixed;z-index:50;background:var(--surface-2);border:1px solid var(--rule-strong);padding:7px 10px;font-family:var(--mono);font-size:11px;color:var(--ink);pointer-events:none;white-space:nowrap;border-radius:3px}
+
+/* digest */
+.digest{border:1px solid var(--rule);background:var(--surface);padding:clamp(18px,3vw,30px);max-width:76ch}
+.digest .from{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--rule);padding-bottom:12px;margin-bottom:18px}
+.digest h3{font-family:var(--display);font-weight:500;font-size:24px;margin:0 0 14px}
+.digest h4{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--series);margin:20px 0 8px;font-weight:500}
+.digest p{margin:0 0 10px;color:rgba(0,0,0,.86);font-size:14.5px}
+.digest ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px;font-size:14.5px;color:rgba(0,0,0,.85)}
+.digest blockquote{margin:8px 0 0;padding-left:12px;border-left:2px solid var(--rule-strong);color:var(--muted);font-size:13.5px;font-style:italic}
+
+textarea{width:100%;min-height:120px;background:var(--surface);border:1px solid var(--rule);color:var(--ink);font-family:var(--mono);font-size:11.5px;padding:12px;resize:vertical}
+.err{color:var(--critical);font-family:var(--mono);font-size:11.5px;margin-top:8px}
+footer{border-top:1px solid var(--rule);padding-block:26px 40px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+@media (max-width:760px){ .two{grid-template-columns:1fr} }
+</style>
+
+<div class="wrap">
+<header>
+  <a class="backlink" href="https://claude.ai/artifact/SNdiZ8ZTnQu7R3wYKGnS4u">← Arnav Singhal</a>
+  <p class="kicker">Review Radar · Demo</p>
+  <h1>Two messy APIs, one weekly digest</h1>
+  <p class="sub">Reviews arrive from different platforms in different shapes, on different rating scales, with different date formats and half the fields missing. Review Radar pulls them, makes them agree, finds what people are complaining about, and tells you when a complaint is growing.</p>
+  <p class="note"><b>About this demo.</b> The shipping service is Python and FastAPI, pulling two live review APIs on a schedule and persisting to PostgreSQL. This page runs the same normalization, tagging and alerting logic in your browser against <b>synthetic sample reviews written for this demo</b> — no real guest data, and the two endpoints are simulated so you can watch the retry layer work. Everything downstream of the fetch is the real logic.</p>
+</header>
+
+<section>
+  <h2>1 · The two sources</h2>
+  <p class="lead">The same review, as each platform hands it over. Different key names, different rating scales, different date formats, and Wanderly sometimes sends a null body.</p>
+  <div class="two">
+    <div class="src">
+      <div class="src-h"><b>Lodgewire</b><span>GET /v2/reviews</span></div>
+      <pre id="rawA"></pre>
+    </div>
+    <div class="src">
+      <div class="src-h"><b>Wanderly</b><span>GET /reviews.json</span></div>
+      <pre id="rawB"></pre>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>2 · The pull</h2>
+  <p class="lead">Paged, rate-limited, and occasionally broken. Backoff is exponential with jitter; a page that fails three times is logged and skipped rather than failing the run.</p>
+  <div class="row">
+    <button class="btn primary" id="run" type="button">Run a pull</button>
+    <button class="btn" id="chaos" type="button" aria-pressed="false">Chaos mode</button>
+  </div>
+  <div class="log" id="log"><div><span class="ok">Ready. Hit “Run a pull”.</span><span></span><span></span></div></div>
+</section>
+
+<section>
+  <h2>3 · Normalized</h2>
+  <p class="lead">One shape, one rating scale, one date format. Cross-source duplicates are detected by text fingerprint and dropped.</p>
+  <div class="stats" id="stats"></div>
+  <div class="row" style="margin-top:18px">
+    <button class="btn" id="showAll" type="button" aria-pressed="false">Show all rows</button>
+  </div>
+  <div class="tblwrap"><table id="normTable"><thead><tr>
+    <th>Date</th><th>Source</th><th>Rating</th><th>Themes</th><th>Sentiment</th><th>Review</th>
+  </tr></thead><tbody></tbody></table></div>
+</section>
+
+<section>
+  <h2>4 · What's moving</h2>
+  <p class="lead">Negative mentions per theme, by week. A theme is flagged when this week's negatives run more than 1.8× its trailing average on at least three mentions — the rule that decides whether it gets called out in the digest.</p>
+  <div class="row">
+    <button class="btn" id="tableView" type="button" aria-pressed="false">Table view</button>
+  </div>
+  <div class="sm" id="sparks"></div>
+  <div class="tblwrap" id="sparkTable" hidden></div>
+</section>
+
+<section>
+  <h2>5 · Monday's digest</h2>
+  <p class="lead">What lands in the inbox. Generated from everything above, nothing hand-written.</p>
+  <div class="digest" id="digest"></div>
+</section>
+
+<section>
+  <h2>Run it on your own reviews</h2>
+  <p class="lead">Paste an array in either shape — Lodgewire's (<code>stars</code>, <code>body</code>, <code>created_at</code>) or Wanderly's (<code>rating</code>, <code>text</code>, <code>date</code>). Mixed arrays are fine; that is the point.</p>
+  <textarea id="paste" spellcheck="false" aria-label="Paste review JSON"></textarea>
+  <div class="row" style="margin-top:12px">
+    <button class="btn primary" id="ingest" type="button">Analyse this</button>
+    <button class="btn" id="restore" type="button">Back to sample data</button>
+  </div>
+  <div class="err" id="err" hidden></div>
+</section>
+
+<footer>Review Radar · A demo by Arnav Singhal · Sample data is synthetic · Runs entirely in your browser</footer>
+</div>
+
+<script>
+/* ═══════════ sample corpus — synthetic reviews written for this demo ═══════════
+   [text, stars, week] — week 0 is eight weeks ago, week 7 is the week just ended.
+   Weeks are assigned rather than random so the demo tells the same story every
+   time: Wi-Fi complaints climbing, check-in complaints gone.                     */
+const CORPUS = [
+  ["Front desk had us checked in before we'd finished crossing the lobby. Genuinely impressive.",5,0],
+  ["Waited 35 minutes to check in with two people ahead of us. One person working the desk on a Friday.",2,0],
+  ["Check-in was a mess, they couldn't find the reservation and nobody seemed to know what to do.",2,1],
+  ["Room was spotless. Whoever does housekeeping here should be running the place.",5,2],
+  ["Found hair in the bathtub and the carpet had stains. Not what I expect at this price.",2,2],
+  ["Bathroom was clean but the room smelled faintly of smoke.",3,3],
+  ["Wifi dropped constantly. I had three calls and had to tether off my phone for all of them.",2,7],
+  ["Internet is unusable past about 8pm. Every evening, same thing.",1,7],
+  ["Wifi kept disconnecting in the room, fine in the lobby which does me no good.",2,6],
+  ["Could not get the wifi to hold a connection long enough to upload anything. Frustrating for a work trip.",2,7],
+  ["The wifi situation has clearly got worse, I stayed here in the spring and it was fine then.",2,6],
+  ["Wifi was fast and it just worked. No captive portal nonsense.",5,1],
+  ["Street noise all night. Bring earplugs if you're facing the road.",2,2],
+  ["Could hear the room next door through the wall clearly. Slept badly.",2,4],
+  ["Quiet room, slept like a rock.",5,5],
+  ["Staff were lovely, especially the woman on the evening shift who found us a late dinner.",5,3],
+  ["Everyone we dealt with was friendly and quick. Real strength of this place.",5,6],
+  ["Desk staff were short with us and seemed annoyed to be asked anything.",2,7],
+  ["Staff went out of their way to store our bags after checkout. Small thing, appreciated it.",5,7],
+  ["Good value for what you pay, especially compared to the places downtown.",4,1],
+  ["Overpriced for what you get. Would not book again at this rate.",2,3],
+  ["Fair price, no complaints on that front.",4,5],
+  ["Breakfast was better than it needed to be. Actual eggs, not a warming tray.",5,2],
+  ["Breakfast ended at 9 sharp and they were clearing plates at 8:45.",2,7],
+  ["Breakfast was fine, standard hotel spread.",3,4],
+  ["Parking was a nightmare, the lot was full and we ended up three blocks away.",2,3],
+  ["Free parking on site, which saved us about forty dollars a night.",5,5],
+  ["Parking garage is tight but it exists and it's covered.",4,6],
+  ["Check-in took two minutes and the room was ready early. Perfect.",5,6],
+  ["Room was clean, staff were kind, wifi was terrible. Two out of three.",3,5],
+  ["Lovely stay overall. Would come back.",5,4],
+  ["The elevator was out the whole stay and we were on the fifth floor.",2,4],
+  ["Nothing wrong with it, nothing memorable either.",3,2],
+  ["Wifi dropped again during a client call. This is the second stay in a row.",1,7],
+  ["Housekeeping skipped our room two days running.",2,3],
+  ["Very clean, very quiet, easy check-in. Exactly what I wanted.",5,7],
+  ["The internet here is not fit for remote work, be warned.",1,0],
+  ["Staff handled a billing mistake quickly and without any fuss.",5,5],
+  ["Noisy corridor, doors slamming until late.",2,1],
+  ["Great breakfast and friendly service, would recommend.",5,6],
+  ["Wifi was patchy in the room again this trip.",2,3],
+  ["Room smelled musty and the window wouldn't open.",2,2],
+  ["Excellent value, clean room, good location.",5,7],
+  ["Internet outage for most of Tuesday, no communication about it from the desk.",1,7]
+];
+
+const THEMES = {
+  "Check-in":   ["check in","check-in","checkin","front desk","reservation","lobby","checked in","checkout"],
+  "Cleanliness":["clean","spotless","dirty","stain","hair","smell","musty","housekeeping","smoke"],
+  "Wi-Fi":      ["wifi","wi-fi","internet","connection","disconnect","tether","online","outage"],
+  "Noise":      ["noise","noisy","loud","quiet","earplug","slam","hear","street"],
+  "Staff":      ["staff","service","friendly","desk staff","rude","kind","short with","helpful"],
+  "Value":      ["value","price","overpriced","expensive","cheap","rate","worth","cost"],
+  "Breakfast":  ["breakfast","eggs","buffet","coffee","dining"],
+  "Parking":    ["parking","lot","garage","valet"]
+};
+
+const NEG_WORDS = ["not","no","never","terrible","awful","bad","worse","worst","poor","dirty","rude","slow","unusable",
+  "nightmare","frustrating","overpriced","dropped","disconnect","skipped","broken","out","mess","annoyed","badly","patchy",
+  "outage","waited","full","short","musty","stain","smoke","unfit","warned","couldn't","wouldn't","nothing"];
+const POS_WORDS = ["clean","spotless","lovely","great","excellent","perfect","friendly","kind","quick","fast","quiet",
+  "impressive","good","fair","recommend","appreciated","easy","saved","better","worked","strength"];
+
+const WEEKS = 8;
+const SOURCES = ["Lodgewire","Wanderly"];
+const ICONS = {
+  up:'<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 10V2M6 2 2.5 5.5M6 2l3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>',
+  down:'<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 2v8M6 10l3.5-3.5M6 10 2.5 6.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>',
+  flat:'<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 6h8" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>',
+  alert:'<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1 11.5 11h-11z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M6 5v3" stroke="currentColor" stroke-width="1.5"/><circle cx="6" cy="9.6" r=".7" fill="currentColor"/></svg>'
+};
+
+/* deterministic PRNG so the demo reads the same for everyone */
+let seed = 20261005;
+const rnd = () => (seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
+
+/* ═══════════ build the two raw feeds ═══════════ */
+const DAY = 86400000;
+const END = new Date("2026-10-05T00:00:00Z").getTime();
+
+function buildRaw(){
+  const A = [], B = [];
+  CORPUS.forEach((row, i) => {
+    const [text, stars, week] = row;
+    // land it somewhere inside that week, deterministically
+    const ts = END - (WEEKS - 1 - week) * 7 * DAY - ((i * 3) % 7) * DAY - DAY;
+    const d = new Date(ts);
+    if(i % 2 === 0){
+      A.push({ id:"lw_" + (4100 + i), stars, body:text,
+               created_at:d.toISOString(), author:{name:"Guest " + (i+1)} });
+    } else {
+      const pad = n => String(n).padStart(2, "0");
+      B.push({ review_id:"WN-" + (9000 + i), rating: stars + "/5",
+               text: rnd() < 0.06 ? null : text,
+               date: `${pad(d.getUTCMonth()+1)}/${pad(d.getUTCDate())}/${d.getUTCFullYear()}`,
+               reviewer_name:"guest" + (i+1), lang:"en" });
+    }
+  });
+  // one deliberate cross-source duplicate
+  B.push({ review_id:"WN-9999", rating:"2/5", text:CORPUS[6][0],
+           date:"09/29/2026", reviewer_name:"guest_dup", lang:"en" });
+  return {A, B};
+}
+const RAW = buildRaw();
+
+/* ═══════════ normalization — the real work ═══════════ */
+const issues = {rescaled:0, reformatted:0, missing:0, duplicates:0};
+
+function normalize(records){
+  issues.rescaled = issues.reformatted = issues.missing = issues.duplicates = 0;
+  const seen = new Set();
+  const out = [];
+  for(const r of records){
+    let id, rating, text, date, author, source;
+    if("stars" in r || "body" in r || "created_at" in r){
+      source = "Lodgewire";
+      id = r.id;
+      rating = Number(r.stars);
+      text = r.body;
+      date = r.created_at ? new Date(r.created_at) : null;
+      author = r.author && r.author.name;
+    } else {
+      source = "Wanderly";
+      id = r.review_id;
+      // "4/5" -> 4
+      if(typeof r.rating === "string" && r.rating.includes("/")){
+        const [num, den] = r.rating.split("/").map(Number);
+        rating = den && den !== 5 ? (num / den) * 5 : num;
+        issues.rescaled++;
+      } else rating = Number(r.rating);
+      text = r.text;
+      // MM/DD/YYYY -> Date
+      if(typeof r.date === "string" && r.date.includes("/")){
+        const [m, d, y] = r.date.split("/").map(Number);
+        date = new Date(Date.UTC(y, m - 1, d));
+        issues.reformatted++;
+      } else date = r.date ? new Date(r.date) : null;
+      author = r.reviewer_name;
+    }
+    if(!text || !text.trim()){ issues.missing++; continue; }
+    if(!date || isNaN(+date)){ issues.missing++; continue; }
+    const fp = text.trim().toLowerCase().replace(/[^a-z0-9]+/g, "").slice(0, 60);
+    if(seen.has(fp)){ issues.duplicates++; continue; }
+    seen.add(fp);
+    out.push({
+      id, source, rating: Math.max(1, Math.min(5, rating)),
+      text: text.trim(), date, author: author || "—"
+    });
+  }
+  return out.sort((a, b) => b.date - a.date);
+}
+
+/* ═══════════ tagging + sentiment ═══════════ */
+function tag(text){
+  const low = " " + text.toLowerCase() + " ";
+  const hits = [];
+  for(const [theme, words] of Object.entries(THEMES))
+    if(words.some(w => low.includes(w))) hits.push(theme);
+  return hits.length ? hits : ["Other"];
+}
+function sentiment(text, rating){
+  const words = text.toLowerCase().split(/[^a-z'-]+/);
+  let score = 0;
+  words.forEach(w => {
+    if(POS_WORDS.includes(w)) score += 1;
+    if(NEG_WORDS.includes(w)) score -= 1;
+  });
+  const lexical = Math.max(-1, Math.min(1, score / 4));
+  const fromRating = (rating - 3) / 2;          // -1..1
+  return lexical * 0.45 + fromRating * 0.55;    // rating dominates, text adjusts
+}
+
+let RECORDS = [];
+function enrich(list){
+  return list.map(r => {
+    const s = sentiment(r.text, r.rating);
+    return {...r, themes: tag(r.text), sent: s,
+            neg: s < -0.15, week: weekOf(r.date)};
+  });
+}
+function weekOf(d){
+  const diff = Math.floor((END - d.getTime()) / (7 * DAY));
+  return Math.max(0, Math.min(WEEKS - 1, WEEKS - 1 - diff));
+}
+
+/* ═══════════ trend + alerting ═══════════ */
+function trends(){
+  const names = [...Object.keys(THEMES), "Other"];
+  return names.map(name => {
+    const series = Array.from({length:WEEKS}, () => 0);
+    let total = 0;
+    RECORDS.forEach(r => {
+      if(!r.themes.includes(name)) return;
+      total++;
+      if(r.neg) series[r.week]++;
+    });
+    const latest = series[WEEKS-1];
+    const prior = series.slice(0, WEEKS-1);
+    const trailing = prior.reduce((a, b) => a + b, 0) / Math.max(1, prior.length);
+    const ratio = trailing > 0 ? latest / trailing : (latest >= 3 ? 99 : 0);
+    const priorSum = prior.reduce((a, b) => a + b, 0);
+    let state = "flat";
+    if(latest >= 3 && ratio >= 1.8) state = "critical";
+    else if(latest >= 2 && ratio >= 1.3) state = "warning";
+    else if(latest === 0 && priorSum >= 3) state = "good";
+    return {name, series, total, latest, trailing, ratio, state,
+            negTotal: series.reduce((a,b) => a+b, 0)};
+  }).filter(t => t.total > 0)
+    .sort((a, b) => (b.state === "critical") - (a.state === "critical") || b.negTotal - a.negTotal);
+}
+
+/* ═══════════ rendering ═══════════ */
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+
+function paintJSON(obj){
+  return esc(JSON.stringify(obj, null, 2))
+    .replace(/&quot;/g, '"')
+    .replace(/"([^"]+)":/g, '<span class="k">"$1"</span>:')
+    .replace(/: "([^"]*)"/g, ': <span class="s">"$1"</span>')
+    .replace(/: (\d+(\.\d+)?|null)/g, ': <span class="n">$1</span>');
+}
+
+function renderRaw(){
+  $("rawA").innerHTML = paintJSON(RAW.A[3]);
+  const withNull = RAW.B.find(r => r.text === null) || RAW.B[3];
+  $("rawB").innerHTML = paintJSON(withNull);
+}
+
+let showAllRows = false;
+function renderTable(){
+  const rows = showAllRows ? RECORDS : RECORDS.slice(0, 8);
+  $("normTable").querySelector("tbody").innerHTML = rows.map(r => {
+    const cls = r.sent < -0.15 ? "sent-neg" : r.sent > 0.2 ? "sent-pos" : "sent-neu";
+    const label = r.sent < -0.15 ? "negative" : r.sent > 0.2 ? "positive" : "neutral";
+    return `<tr>
+      <td class="num">${r.date.toISOString().slice(0,10)}</td>
+      <td><span class="pill">${r.source}</span></td>
+      <td class="num">${r.rating.toFixed(1)}</td>
+      <td>${r.themes.map(t => `<span class="pill">${t}</span>`).join(" ")}</td>
+      <td class="num ${cls}">${r.sent >= 0 ? "+" : ""}${r.sent.toFixed(2)} ${label}</td>
+      <td>${esc(r.text)}</td>
+    </tr>`;
+  }).join("");
+  $("showAll").textContent = showAllRows ? "Show first 8" : `Show all ${RECORDS.length} rows`;
+  $("showAll").setAttribute("aria-pressed", showAllRows);
+}
+
+function renderStats(){
+  const neg = RECORDS.filter(r => r.neg).length;
+  $("stats").innerHTML = `
+    <div><b>${RECORDS.length}</b><span>Reviews kept</span></div>
+    <div><b>${issues.rescaled}</b><span>Ratings rescaled</span></div>
+    <div><b>${issues.reformatted}</b><span>Dates reformatted</span></div>
+    <div><b>${issues.missing}</b><span>Dropped, no body</span></div>
+    <div><b>${issues.duplicates}</b><span>Cross-source dupes</span></div>
+    <div><b>${neg}</b><span>Negative</span></div>`;
+}
+
+let tip = null;
+function showTip(html, x, y){
+  if(!tip){ tip = document.createElement("div"); tip.className = "tip"; document.body.appendChild(tip); }
+  tip.innerHTML = html;
+  tip.style.left = Math.min(x + 12, innerWidth - tip.offsetWidth - 12) + "px";
+  tip.style.top = (y - 38) + "px";
+}
+function hideTip(){ if(tip){ tip.remove(); tip = null; } }
+
+function spark(t){
+  const W = 240, H = 56, max = Math.max(2, ...t.series);
+  const x = i => (i / (WEEKS - 1)) * (W - 8) + 4;
+  const y = v => H - 6 - (v / max) * (H - 16);
+  const pts = t.series.map((v, i) => [x(i), y(v)]);
+  const d = pts.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
+  const dots = pts.map((p, i) => {
+    const hot = i === WEEKS - 1 && (t.state === "critical" || t.state === "warning");
+    const r = i === WEEKS - 1 ? 4.5 : 0;
+    return r ? `<circle class="sdot${hot ? " hot" : ""}" cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${r}"/>` : "";
+  }).join("");
+  const hits = t.series.map((v, i) =>
+    `<rect class="hit" x="${(x(i)-12).toFixed(1)}" y="0" width="24" height="${H}"
+      data-week="${i}" data-val="${v}" data-theme="${t.name}"/>`).join("");
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" role="img"
+      aria-label="${t.name}: negative mentions per week, ${t.series.join(", ")}">
+    <line class="gridline" x1="4" y1="${H-6}" x2="${W-4}" y2="${H-6}"/>
+    <text class="axis" x="4" y="10">${max}</text>
+    <path class="sline" d="${d}"/>${dots}${hits}
+  </svg>`;
+}
+
+function deltaLabel(t){
+  if(t.state === "critical") return `<span class="delta d-critical">${ICONS.alert}Spike · ${t.latest} this week vs ${t.trailing.toFixed(1)} avg</span>`;
+  if(t.state === "warning")  return `<span class="delta d-warning">${ICONS.up}Rising · ${t.latest} vs ${t.trailing.toFixed(1)} avg</span>`;
+  if(t.state === "good")     return `<span class="delta d-good">${ICONS.down}Cleared · none this week, ${t.trailing.toFixed(1)} avg before</span>`;
+  return `<span class="delta d-flat">${ICONS.flat}Steady · ${t.latest} vs ${t.trailing.toFixed(1)} avg</span>`;
+}
+
+function renderSparks(T){
+  $("sparks").innerHTML = T.map(t => `
+    <figure class="card ${t.state === "critical" ? "alert" : ""}" style="margin:0">
+      <div class="card-h"><h3>${t.name}</h3><span class="tot">${t.total} mentions</span></div>
+      ${deltaLabel(t)}
+      ${spark(t)}
+      <figcaption>Negative mentions · 8 weeks to 5 Oct</figcaption>
+    </figure>`).join("");
+
+  $("sparkTable").innerHTML = `<table><thead><tr><th>Theme</th>
+    ${Array.from({length:WEEKS}, (_, i) => `<th>W${i+1}</th>`).join("")}
+    <th>Mentions</th><th>State</th></tr></thead><tbody>
+    ${T.map(t => `<tr><td>${t.name}</td>
+      ${t.series.map(v => `<td class="num">${v}</td>`).join("")}
+      <td class="num">${t.total}</td><td>${t.state}</td></tr>`).join("")}
+  </tbody></table>`;
+}
+
+$("sparks").addEventListener("pointerover", e => {
+  const h = e.target.closest(".hit");
+  if(!h) return;
+  showTip(`<b>${h.dataset.theme}</b> · week ${+h.dataset.week + 1} · ${h.dataset.val} negative`, e.clientX, e.clientY);
+});
+$("sparks").addEventListener("pointerout", hideTip);
+
+function renderDigest(T){
+  const spikes = T.filter(t => t.state === "critical");
+  const rising = T.filter(t => t.state === "warning");
+  const easing = T.filter(t => t.state === "good");
+  const week = RECORDS.filter(r => r.week === WEEKS - 1);
+  const avg = week.length ? (week.reduce((a, r) => a + r.rating, 0) / week.length) : 0;
+  const quote = RECORDS.filter(r => r.neg && spikes.length && r.themes.includes(spikes[0].name))
+                       .sort((a, b) => b.date - a.date)[0];
+  $("digest").innerHTML = `
+    <div class="from">Review Radar · Monday 5 Oct 2026 · 7-day digest</div>
+    <h3>${spikes.length ? spikes[0].name + " needs attention" : "A quiet week"}</h3>
+    <p>${week.length} new review${week.length === 1 ? "" : "s"} across two platforms, averaging
+       ${avg.toFixed(1)} stars. ${RECORDS.filter(r => r.week === WEEKS-1 && r.neg).length} were negative.</p>
+    ${spikes.length ? `<h4>Flagged</h4><ul>${spikes.map(t =>
+      `<li><b>${t.name}</b> — ${t.latest} negative mentions this week against a trailing average of
+       ${t.trailing.toFixed(1)}. That is ${t.ratio === 99 ? "new this week" : t.ratio.toFixed(1) + "× normal"}.</li>`).join("")}</ul>` : ""}
+    ${quote ? `<blockquote>“${esc(quote.text)}” — ${quote.source}, ${quote.date.toISOString().slice(0,10)}</blockquote>` : ""}
+    ${rising.length ? `<h4>Worth watching</h4><ul>${rising.map(t =>
+      `<li>${t.name} — ${t.latest} this week vs ${t.trailing.toFixed(1)} average.</li>`).join("")}</ul>` : ""}
+    ${easing.length ? `<h4>Cleared</h4><ul>${easing.slice(0,3).map(t =>
+      `<li>${t.name} — no negative mentions this week, against a ${t.trailing.toFixed(1)} weekly average before it.</li>`).join("")}
+      ${easing.length > 3 ? `<li>And ${easing.length - 3} other theme${easing.length - 3 > 1 ? "s" : ""} with nothing logged this week.</li>` : ""}</ul>` : ""}
+    <h4>Everything else</h4>
+    <p>${T.filter(t => t.state === "flat").map(t => t.name).join(", ") || "Nothing else logged mentions."} held steady.</p>`;
+}
+
+function renderAll(){
+  const T = trends();
+  renderStats(); renderTable(); renderSparks(T); renderDigest(T);
+}
+
+/* ═══════════ simulated pull with retries ═══════════ */
+let chaos = false;
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+async function runPull(){
+  const log = $("log");
+  log.innerHTML = "";
+  const line = (txt, code, note) => {
+    const cls = code === 200 ? "c200" : code === 429 ? "c429" : code === 500 ? "c500" : "ok";
+    log.insertAdjacentHTML("beforeend",
+      `<div><span class="ok">${txt}</span><span class="${cls}">${code || ""}</span><span>${note}</span></div>`);
+    log.scrollTop = log.scrollHeight;
+  };
+  const pages = [
+    ["GET lodgewire/v2/reviews?page=1", 12], ["GET lodgewire/v2/reviews?page=2", 10],
+    ["GET wanderly/reviews.json?offset=0", 12], ["GET wanderly/reviews.json?offset=12", 11]
+  ];
+  let total = 0;
+  for(const [url, n] of pages){
+    let attempt = 0, ok = false;
+    while(attempt < 4 && !ok){
+      await sleep(180);
+      const roll = rnd();
+      const fail = chaos ? roll < 0.55 : roll < 0.28;
+      if(fail && attempt < 3){
+        const code = roll < 0.1 ? 500 : 429;
+        const backoff = Math.round(200 * Math.pow(2, attempt) + rnd() * 120);
+        line(url, code, `retry in ${backoff}ms`);
+        await sleep(Math.min(backoff, 700));
+        attempt++;
+      } else if(attempt >= 3){
+        line(url, 500, "giving up · page skipped");
+        break;
+      } else {
+        line(url, 200, `${n} records · ${Math.round(80 + rnd()*180)}ms`);
+        total += n; ok = true;
+      }
+    }
+  }
+  await sleep(200);
+  line(`normalize ${total} records`, 0,
+       `${issues.duplicates} dupes dropped · ${issues.rescaled} rescaled · ${issues.reformatted} dates fixed`);
+  line("persist → postgres · schedule next run Mon 06:00", 0, "done");
+}
+
+/* ═══════════ wiring ═══════════ */
+$("run").addEventListener("click", runPull);
+$("chaos").addEventListener("click", () => {
+  chaos = !chaos;
+  $("chaos").setAttribute("aria-pressed", chaos);
+});
+$("showAll").addEventListener("click", () => { showAllRows = !showAllRows; renderTable(); });
+$("tableView").addEventListener("click", () => {
+  const on = $("sparkTable").hidden;
+  $("sparkTable").hidden = !on;
+  $("sparks").hidden = on;
+  $("tableView").setAttribute("aria-pressed", on);
+  $("tableView").textContent = on ? "Chart view" : "Table view";
+});
+$("ingest").addEventListener("click", () => {
+  $("err").hidden = true;
+  try{
+    const parsed = JSON.parse($("paste").value);
+    if(!Array.isArray(parsed) || !parsed.length) throw new Error("Expected a non-empty array of review objects.");
+    RECORDS = enrich(normalize(parsed));
+    if(!RECORDS.length) throw new Error("Nothing survived normalization — every row was missing a body or a date.");
+    renderAll();
+  }catch(e){
+    $("err").hidden = false;
+    $("err").textContent = e.message;
+  }
+});
+$("restore").addEventListener("click", () => {
+  $("paste").value = "";
+  $("err").hidden = true;
+  RECORDS = enrich(normalize([...RAW.A, ...RAW.B]));
+  renderAll();
+});
+
+/* boot */
+renderRaw();
+RECORDS = enrich(normalize([...RAW.A, ...RAW.B]));
+renderAll();
+$("paste").value = JSON.stringify([RAW.A[0], RAW.B[0]], null, 2);
+</script>
