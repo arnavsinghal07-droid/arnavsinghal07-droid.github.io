@@ -320,7 +320,6 @@ figure:hover figcaption,figure:focus-within figcaption{opacity:1}
     <div class="hero-top">
       <p class="eyebrow">Product · Research · Photographs</p>
       <h1>Arnav Singhal</h1>
-      <p class="thesis">I build AI products that have to work when someone is standing on a floor at 2am, and I photograph the hours most people sleep through.</p>
       <div class="hero-meta">
         <span>Cornell '28</span>
         <span>Founding PE, Sidekick (YC W26)</span>
@@ -689,7 +688,7 @@ const ENTRIES = [
   {
     id:"photoculler", year:"2024 —", title:"Photo Culler", tag:"product", status:"shipped",
     sub:"Founder · AI photo culling · San Jose",
-    link:{label:"Open the working demo", url:"https://arnavsinghal07-droid.github.io/photo-culler.html"},
+    link:{label:"Open the working demo", url:"https://arnavsinghal.space/photo-culler.html"},
     lede:"A tool for the problem I actually have: thousands of raw frames off a single shoot, most of them near-identical, and no fast way to find the one worth editing.",
     study:{
       summary:"A command-line photo culler. It clusters near-duplicate frames by what is in them, scores each for sharpness and exposure, and keeps the best one from every burst. Runs across libraries of 10,000+ photos, locally, with no subscription.",
@@ -724,7 +723,7 @@ const ENTRIES = [
   {
     id:"reviewradar", year:"2025 —", title:"Review Radar", tag:"product", status:"shipped",
     sub:"Founder · Review aggregation service · Ithaca",
-    link:{label:"Open the working demo", url:"https://arnavsinghal07-droid.github.io/review-radar.html"},
+    link:{label:"Open the working demo", url:"https://arnavsinghal.space/review-radar.html"},
     lede:"Reviews live on platforms that disagree about everything — field names, rating scales, date formats, whether a body is required. This makes them agree, then says what changed.",
     study:{
       summary:"A scheduled service that pulls reviews from two platforms, normalizes them into one shape, tags what guests are complaining about, and sends a weekly digest that leads with whatever is getting worse.",
@@ -768,18 +767,6 @@ const ENTRIES = [
       ]},
       {h:"Outcome", metrics:[["~35%","faster to first API call"],["30+","enterprise accounts tracked"],["6","data types benchmarked"],["2","at-risk accounts caught"]]}
     ]
-  },
-  {
-    id:"mintlify", year:"2026 —", title:"Mintlify", tag:"product", status:"building",
-    sub:"In progress",
-    lede:"Placeholder — details to be filled in.",
-    blocks:[{h:"Status", p:"Work in progress. This entry is a stub so it holds its place in the index; swap in the real description when it is ready to share."}]
-  },
-  {
-    id:"cognition", year:"2026 —", title:"Cognition", tag:"product", status:"building",
-    sub:"In progress",
-    lede:"Placeholder — details to be filled in.",
-    blocks:[{h:"Status", p:"Work in progress. This entry is a stub so it holds its place in the index; swap in the real description when it is ready to share."}]
   }
 ];
 
@@ -815,8 +802,6 @@ const MEDIA = {
   photoculler:  {kind:"type", word:"Photo Culler", note:"CLIP · 10K+ libraries", tint:TINT.product},
   reviewradar:  {kind:"type", word:"Review Radar", note:"FastAPI · Two APIs", tint:TINT.product},
   skyflow:      {kind:"logo", img:"logo_skyflow", word:"Skyflow"},
-  mintlify:     {kind:"type", word:"Mintlify", note:"In development", tint:TINT.building},
-  cognition:    {kind:"type", word:"Cognition", note:"In development", tint:TINT.building}
 };
 
 /* --- 6. LIGHT TABLE SETTINGS --------------------------------------- */
