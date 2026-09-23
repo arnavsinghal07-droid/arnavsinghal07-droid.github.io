@@ -62,12 +62,29 @@ a{color:inherit}
 .bar nav a:hover{color:var(--blue)}
 
 /* ---------- hero ---------- */
-.hero{padding-block:clamp(40px,7vh,76px) clamp(44px,7vh,76px);border-bottom:1px solid var(--rule)}
-.hero-top{display:flex;flex-direction:column;gap:clamp(14px,2.4vh,22px);margin-bottom:clamp(30px,5vh,52px)}
+.hero{padding-block:clamp(36px,6vh,64px) clamp(26px,3.5vh,42px);border-bottom:1px solid var(--rule)}
+.hero-top{display:flex;flex-direction:column;gap:clamp(12px,2vh,18px);margin-bottom:clamp(24px,3.5vh,38px)}
 .eyebrow{font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin:0}
 h1{font-family:var(--display);font-weight:500;font-size:clamp(46px,10vw,112px);line-height:.92;letter-spacing:-.035em;margin:0;text-wrap:balance;text-transform:uppercase}
 .thesis{font-size:clamp(16.5px,2.1vw,21px);line-height:1.5;max-width:46ch;color:var(--ink);margin:0}
 .hero-meta{display:flex;flex-wrap:wrap;gap:8px 22px;font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;padding-top:14px;border-top:1px solid var(--rule)}
+
+/* ---------- id card ---------- */
+.idcard{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(20px,4vw,56px);align-items:start;padding-top:16px;border-top:1px solid var(--rule)}
+.idrow{font-size:clamp(13.5px,1.35vw,15px);line-height:1.62;margin:0 0 7px;max-width:64ch;color:var(--ink)}
+.idrow:last-child{margin-bottom:0}
+.idrow b{font-family:var(--mono);font-weight:500;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-right:9px;white-space:nowrap}
+.jump{font:inherit;color:var(--ink);background:var(--blue-soft);border:0;border-bottom:1px solid var(--rule-strong);padding:0 3px;margin:0 -3px;cursor:pointer;transition:.18s;border-radius:0}
+.jump:hover,.jump:focus-visible{background:var(--blue);color:var(--paper);border-bottom-color:var(--blue)}
+.idcard-r{display:flex;flex-direction:column;align-items:flex-end;gap:6px;font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase}
+.idcard-r a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:2px;transition:.18s}
+.idcard-r a:hover{color:var(--blue);border-bottom-color:var(--blue)}
+.idclock{margin:0 0 4px;color:var(--dim);letter-spacing:.14em;white-space:nowrap}
+@media(max-width:760px){
+  .idcard{grid-template-columns:1fr;gap:16px}
+  .idcard-r{align-items:flex-start;flex-direction:row;flex-wrap:wrap;gap:10px 18px}
+  .idclock{width:100%;margin:0}
+}
 
 /* ---------- light table ---------- */
 .lt-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-bottom:12px}
@@ -104,8 +121,8 @@ h1{font-family:var(--display);font-weight:500;font-size:clamp(46px,10vw,112px);l
    Scoped to the page's own top-level sections. An unscoped `section` rule also
    hits the <section> elements inside the detail modal, which is a cascade
    collision that is invisible until it is 180px of dead space. */
-main > section{padding-block:clamp(56px,9vh,104px)}
-.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;margin-bottom:clamp(26px,4vh,44px)}
+main > section{padding-block:clamp(34px,5vh,58px)}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:12px;margin-bottom:clamp(20px,3vh,32px)}
 .sec-head h2{font-family:var(--display);font-weight:500;font-size:clamp(26px,4.2vw,42px);line-height:1;margin:0;letter-spacing:-.03em;text-transform:uppercase}
 .sec-note{font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 
@@ -320,10 +337,20 @@ figure:hover figcaption,figure:focus-within figcaption{opacity:1}
     <div class="hero-top">
       <p class="eyebrow">Product · Research · Photographs</p>
       <h1>Arnav Singhal</h1>
-      <div class="hero-meta">
-        <span>Cornell '28</span>
-        <span>Founding PE, Sidekick (YC W26)</span>
-        <span>Ithaca &amp; the Bay</span>
+      <div class="idcard">
+        <div class="idcard-l">
+          <p class="idrow"><b>Currently</b> Founding product engineer at <button class="jump" data-open="sidekick">Sidekick</button> (YC S26), building an AI assistant for frontline hotel teams. Hotel Administration at Cornell '28, minors in CS and Statistics.</p>
+          <p class="idrow"><b>Previously</b> <button class="jump" data-open="cocacola">Coca-Cola Vietnam</button>, <button class="jump" data-open="adobe">Adobe</button>, <button class="jump" data-open="skyflow">Skyflow</button> and <button class="jump" data-open="gimme">Gimme! Coffee</button>.</p>
+          <p class="idrow"><b>Also building</b> <button class="jump" data-open="sightline">Sightline</button>, <button class="jump" data-open="populationlab">PopulationLab</button> and <button class="jump" data-open="photoculler">Photo Culler</button>.</p>
+          <p class="idrow"><b>Ask me about</b> hospitality tech, market-entry models, whether simulated people behave like people, <button class="jump" data-open="commencement">shooting at night</button>, basketball, chess, baking and anime.</p>
+        </div>
+        <div class="idcard-r">
+          <p class="idclock"><span id="clock">--:--:--</span> in Ithaca</p>
+          <a href="https://linkedin.com/in/arnav-singhal0" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/arnavsinghal07-droid" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.instagram.com/arnav.s.inghal/" target="_blank" rel="noopener">Instagram</a>
+          <a href="mailto:as4465@cornell.edu">E-mail</a>
+        </div>
       </div>
     </div>
 
@@ -347,7 +374,7 @@ figure:hover figcaption,figure:focus-within figcaption{opacity:1}
   </section>
 
   <section class="wrap" id="index">
-    <div class="sec-head"><h2>The Index</h2><p class="sec-note">Everything, dated · Click a tile to open it</p></div>
+    <div class="sec-head"><h2>The Index</h2><p class="sec-note">Work, then leadership, then photographs · Click a tile to open it</p></div>
     <div class="filters" role="group" aria-label="Filter the index">
       <button class="chip" data-filter="all" aria-pressed="true">All</button>
       <button class="chip" data-filter="product" aria-pressed="false">Product</button>
@@ -378,7 +405,7 @@ figure:hover figcaption,figure:focus-within figcaption{opacity:1}
         <div><dt>Product</dt><dd>User research &amp; discovery · market sizing · competitive analysis · UX benchmarking · survey design · roadmap prioritization</dd></div>
         <div><dt>Technical</dt><dd>Python · TypeScript / Next.js · Supabase &amp; Postgres · vector search &amp; RAG · generative AI prototyping and evaluation · financial modeling · Adobe Creative Suite</dd></div>
         <div><dt>Cameras</dt><dd>Sony A7 IV with the FE 24–70mm f/2.8 GM II · Canon EOS R8 · Fujifilm X-S20 · Nikon D7200. Lightroom for everything after.</dd></div>
-        <div><dt>Languages</dt><dd>English · Hindi (fluent) · Japanese (intermediate)</dd></div>
+        <div><dt>Languages</dt><dd>English (native) · Hindi (fluent) · Japanese (intermediate)</dd></div>
         <div><dt>Otherwise</dt><dd>Basketball, chess, baking, anime, and long arguments about whether aggregate metrics mean anything.</dd></div>
       </dl>
     </div>
@@ -390,6 +417,8 @@ figure:hover figcaption,figure:focus-within figcaption{opacity:1}
         <p class="eyebrow" style="margin:0 0 10px">Get in touch</p>
         <a href="mailto:as4465@cornell.edu">as4465@cornell.edu</a>
         <a href="https://linkedin.com/in/arnav-singhal0" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/arnavsinghal07-droid" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.instagram.com/arnav.s.inghal/" target="_blank" rel="noopener">Instagram</a>
       </div>
       <p class="colophon">
         Arnav Singhal · 2026<br>
@@ -476,9 +505,10 @@ const SERIES = [
    link: optional — {label:"Open the demo", url:"https://..."} puts a
          button at the top of that project's detail panel               */
 const ENTRIES = [
+  /* ---- Work — roles ---- */
   {
     id:"sidekick", year:"2025 —", title:"Sidekick", tag:"product", status:"shipped",
-    sub:"Founding Product Engineer · Y Combinator W26 · San Jose",
+    sub:"Founding Product Engineer · Y Combinator S26 · San Jose",
     lede:"An AI assistant that reaches frontline hotel staff over SMS, where they already are, rather than in one more dashboard nobody opens mid-shift.",
     study:{
       summary:"Founding product engineer on an AI assistant for hotel operations teams. I own the roadmap, the weekly ship cadence, and features end to end across a five-person team. The product is live at twelve properties and past $150K ARR.",
@@ -511,6 +541,63 @@ const ENTRIES = [
       ]
     }
   },
+  {
+    id:"cocacola", year:"2026", title:"Coca-Cola Vietnam", tag:"product", status:"shipped",
+    sub:"Market expansion intelligence · 2027 commercial planning",
+    lede:"A province-level opportunity-scoring tool for Coca-Cola Vietnam's commercial team, built to replace an expansion-planning process that had no shared view of the market.",
+    study:{
+      summary:"A market-expansion intelligence MVP covering all 40+ Vietnamese provinces, built for Coca-Cola Vietnam's commercial team and adopted for their 2027 distribution planning. It scores each province on opportunity, lets teams drill into the markets underneath, and stress-tests priorities against four forward scenarios.",
+      problem:"Province-level expansion decisions were being made without a shared, evidenced view of the market. Seven interviews across sales and commercial planning surfaced four recurring decision bottlenecks, each of them a place where the process stalled waiting on analysis that nobody owned. Those interviews became ten MVP requirements.",
+      user:[
+        {label:"Primary", who:"Commercial planning team setting 2027 province priorities",
+         note:"They own the roadmap for where distribution expands next, and they carry the consequences of getting the sequence wrong."},
+        {label:"Alongside", who:"Sales leadership working the same province list from the field",
+         note:"They hold the ground truth the data misses, and they need the scoring to be legible enough to argue with."}
+      ],
+      insight:"The constraint was time-to-decision, not a shortage of data. The inputs existed across five separate datasets; what did not exist was a single place to see a province's score and the evidence underneath it in the same motion. Testing bore that out — collapsing the scoring and the drill-downs into one view cut time-to-priority-market by roughly half.",
+      solution:"An opportunity-scoring MVP across 40+ provinces, integrating five datasets and seven market signals to surface twelve high-potential distribution whitespace opportunities. Underneath it, a source-referenced market intelligence dataset built from 800+ retail, restaurant, coffee and hospitality locations, so every score traces back to something real. On top of it, four scenario-planning models covering excise-tax exposure, channel growth and consumer demand, which let the commercial team find the markets that hold up across multiple 2027 futures rather than the ones that only look good today. Validated with five Coca-Cola commercial stakeholders across three planning workflows, iterating on the scoring logic and the drill-downs each round.",
+      outcome:[["40+","provinces scored"],["12","whitespace opportunities"],["~50%","faster to priority markets"],["800+","outlets mapped"],["5","datasets integrated"],["4","scenarios modelled"]],
+      next:[
+        "Check the scoring against what the commercial team actually chose. Agreement is the only real test of whether the model encodes their judgment or just outvotes it.",
+        "Make the scenario weights editable by the team rather than fixed in the model, so disagreement about 2027 becomes an input instead of an argument about the tool.",
+        "Close the loop on the four bottlenecks the interviews found, and confirm which ones the MVP actually removed."
+      ]
+    }
+  },
+  {
+    id:"adobe", year:"2026", title:"Adobe", tag:"strategy", status:"archive",
+    sub:"AI / Strategy Consultant (Contract) · Jan – Apr 2026 · San Jose",
+    lede:"Advised IT leadership at Fortune 500 client firms on enterprise AI product strategy across four engagements.",
+    blocks:[{h:"The work", ul:[
+      "Built market-sizing frameworks, UX benchmarks, and competitive positioning analyses shaping adoption decisions tied to $1M+ contracts.",
+      "Authored business cases for five proposed AI capabilities. Two were adopted by leadership and are now in suite beta testing."
+    ]}]
+  },
+  {
+    id:"gimme", year:"2025 – 26", title:"Gimme! Coffee", tag:"strategy", status:"archive",
+    sub:"Growth Strategy Consultant (Contract) · Oct 2025 – Apr 2026 · Ithaca",
+    lede:"A local roaster with eighteen months of sales data nobody had read carefully and a bakery lineup shaped by habit rather than demand.",
+    blocks:[{h:"The work", ul:[
+      "Analyzed 18 months of historical bakery sales to find top performers and gaps, delivering a prioritized roadmap of product development opportunities to leadership.",
+      "Benchmarked 10+ leading bakeries across Instagram and TikTok engagement to identify high-resonance content types, informing a revised strategy of product spotlights and student collaborations.",
+      "Surveyed 150+ Cornell students on preference, price sensitivity, and purchase frequency, then compared perceptions against on-campus competitors to pitch differentiated campaign concepts."
+    ]}]
+  },
+  {
+    id:"skyflow", year:"2025", title:"Skyflow", tag:"product", status:"archive",
+    sub:"Product Management Intern · Aug – Nov 2025 · Mountain View",
+    lede:"Owned the developer onboarding funnel for an API-first platform — the stretch between a developer's first sandbox call and their first production one, where most of them quietly gave up.",
+    blocks:[
+      {h:"The work", ul:[
+        "Interviewed 15+ engineering teams to diagnose drop-off between sandbox and production, then shipped documentation revisions that cut time-to-first-API-call by roughly 35%.",
+        "Defined product requirements for PII and PCI detection in AI workflows, partnering with engineering to benchmark accuracy across 6 data types and prioritize fixes on the top 3 enterprise use cases.",
+        "Built usage dashboards tracking API adoption and retention across 30+ enterprise accounts, which reprioritized the quarterly roadmap and flagged 2 at-risk accounts ahead of renewal."
+      ]},
+      {h:"Outcome", metrics:[["~35%","faster to first API call"],["30+","enterprise accounts tracked"],["6","data types benchmarked"],["2","at-risk accounts caught"]]}
+    ]
+  },
+
+  /* ---- Work — things I built ---- */
   {
     id:"sightline", year:"2026", title:"Sightline", tag:"product", status:"building",
     sub:"Co-founder · AI-native product discovery — “Cursor for Product Managers”",
@@ -597,93 +684,39 @@ const ENTRIES = [
     }
   },
   {
-    id:"adobe", year:"2026", title:"Adobe", tag:"strategy", status:"archive",
-    sub:"AI / Strategy Consultant (Contract) · Jan – Apr 2026 · San Jose",
-    lede:"Advised IT leadership at Fortune 500 client firms on enterprise AI product strategy across four engagements.",
-    blocks:[{h:"The work", ul:[
-      "Built market-sizing frameworks, UX benchmarks, and competitive positioning analyses shaping adoption decisions tied to $1M+ contracts.",
-      "Authored business cases for five proposed AI capabilities. Two were adopted by leadership and are now in suite beta testing."
-    ]}]
-  },
-  {
-    id:"gimme", year:"2025 – 26", title:"Gimme! Coffee", tag:"strategy", status:"archive",
-    sub:"Growth Strategy Consultant (Contract) · Oct 2025 – Apr 2026 · Ithaca",
-    lede:"A local roaster with eighteen months of sales data nobody had read carefully and a bakery lineup shaped by habit rather than demand.",
-    blocks:[{h:"The work", ul:[
-      "Analyzed 18 months of historical bakery sales to find top performers and gaps, delivering a prioritized roadmap of product development opportunities to leadership.",
-      "Benchmarked 10+ leading bakeries across Instagram and TikTok engagement to identify high-resonance content types, informing a revised strategy of product spotlights and student collaborations.",
-      "Surveyed 150+ Cornell students on preference, price sensitivity, and purchase frequency, then compared perceptions against on-campus competitors to pitch differentiated campaign concepts."
-    ]}]
-  },
-  {
-    id:"dti", year:"2026 —", title:"Cornell Digital Tech &amp; Innovation", tag:"product", status:"ongoing",
-    sub:"Business Analyst · Campus products reaching 17,000+ students",
-    lede:"Product work at real scale for a user base that is unusually willing to tell you exactly what is wrong.",
-    blocks:[
-      {h:"The work", ul:[
-        "Ran 15+ user interviews and usability tests, synthesizing findings into prioritized feature backlogs adopted by engineering teams.",
-        "Defined success metrics and launch strategy for two product releases, driving 2,000+ new student sign-ups in a single semester.",
-        "Built KPI dashboards tracking retention and engagement that now guide roadmap prioritization across three product teams."
-      ]},
-      {h:"Reach", metrics:[["17,000+","students served"],["2,000+","sign-ups in one semester"],["3","product teams using the dashboards"]]}
-    ]
-  },
-  {
-    id:"ibc", year:"2025 —", title:"Cornell International Business Consulting", tag:"strategy", status:"ongoing",
-    sub:"Analyst · Client market-entry engagement",
-    lede:"Selected from 100+ applicants through multi-round case interviews; now on a five-person client engagement.",
-    blocks:[{h:"The work", ul:[
-      "Built a market-entry model sizing a $40M+ TAM across three customer segments.",
-      "Presented final recommendations to client C-suite; two of four proposed initiatives were greenlit for the 2026 expansion roadmap, with a follow-on engagement."
-    ]}]
-  },
-  {
-    id:"cuabs", year:"2025 —", title:"Cornell Undergraduate Asia Business Society", tag:"strategy", status:"ongoing",
-    sub:"Analyst · Admitted at roughly a 5% acceptance rate",
-    lede:"Weekly client-style deliverables across global industries, plus a case competition win.",
-    blocks:[{h:"The work", p:"Led a four-person team to first place in the internal case competition with an APAC hospitality-tech market entry strategy, judged by industry professionals on market sizing, financial projections, go-to-market design, and delivery."}]
-  },
-  {
-    id:"w3b", year:"2021 – 25", title:"W3B Education", tag:"leadership", status:"archive",
-    sub:"Chief Growth Officer · Business, blockchain &amp; AI nonprofit",
-    lede:"Four years growing a student-run education nonprofit from a local idea into something with members on six continents.",
-    blocks:[
-      {h:"The work", ul:["Owned Instagram and LinkedIn growth strategy end to end.","Recruited 50+ corporate executives and 25+ professors as competition speakers and judges.","Raised $3,000+ in competition prizes."]},
-      {h:"Scale", metrics:[["2,000+","members"],["27","countries"],["75+","execs &amp; professors recruited"]]}
-    ]
-  },
-  {
-    id:"fuhsd", year:"2024 – 25", title:"Student Board Representative", tag:"leadership", status:"archive",
-    sub:"Fremont Union High School District · 9,000 students across five schools",
-    lede:"Selected from 500+ applicants to be the student voice in front of the school board.",
-    blocks:[{h:"The work", p:"Represented 9,000 students across five schools and led six initiatives adopted district-wide."}]
-  },
-  {
-    id:"climate", year:"2023 – 25", title:"Fremont Union Climate Collective", tag:"leadership", status:"archive",
-    sub:"Co-founder &amp; President · Sunnyvale, CA",
-    lede:"A student climate organization that turned grant paperwork into an event 1,400 people showed up to.",
-    blocks:[
-      {h:"The work", ul:["Secured $60,000+ in funding across 20+ grant applications.","Produced an Earth Day event drawing 1,400+ attendees and 480 student projects.","Featured Congressman Ro Khanna and National Geographic alongside district and city partners."]},
-      {h:"Scale", metrics:[["$60,000+","raised"],["1,400+","attendees"],["480","student projects"]]}
-    ]
-  },
-  {
-    id:"commencement", year:"2026", title:"Commencement", tag:"photography", status:"shipped",
-    sub:"Photo series · Cornell graduation portraits, May 2026",
-    lede:"An afternoon of portraits that ran into golden hour, which is when it got good.",
-    blocks:[{h:"Note", p:"Shot on the A7 IV with the 24–70 GM II and graded in Lightroom. The frame shot into the sun is f/22 at 1/20 — stopped all the way down to hold the sunstar, slow enough that everyone had to stand still for it."}]
-  },
-  {
-    id:"sanfrancisco", year:"2025", title:"San Francisco", tag:"photography", status:"shipped",
-    sub:"Photo series · Street work across the city, February 2025",
-    lede:"Two days of walking. Chinatown, the Mission, the alleys off Market, and a BART car on the way home.",
-    blocks:[{h:"Note", p:"Shot on the Canon EOS R8 at f/4 almost throughout — one aperture all day, so the only thing left to decide was where to stand."}]
-  },
-  {
-    id:"overhead", year:"2026", title:"Overhead", tag:"photography", status:"shipped",
-    sub:"Photo study · High-angle street, July 2026",
-    lede:"A short study in looking down until a street stops being a scene and becomes a set of shapes.",
-    blocks:[{h:"Note", p:"Three frames, all at 70mm from above. Compression does most of the work: from that angle a car roof, a scooter and a pavement marking all sit on the same plane."}]
+    id:"reviewradar", year:"2025 —", title:"Review Radar", tag:"product", status:"shipped",
+    sub:"Founder · Review aggregation service · Ithaca",
+    link:{label:"Open the working demo", url:"https://arnavsinghal.space/review-radar.html"},
+    lede:"Reviews live on platforms that disagree about everything — field names, rating scales, date formats, whether a body is required. This makes them agree, then says what changed.",
+    study:{
+      summary:"A scheduled service that pulls reviews from two platforms, normalizes them into one shape, tags what guests are complaining about, and sends a weekly digest that leads with whatever is getting worse.",
+      problem:"An independent property's reviews are scattered across platforms that each hold a partial picture. An operator checking them manually sees this week's reviews and nothing else, so a problem that has been building for a month reads as three unrelated complaints. Pattern lives in the aggregate and nobody has time to compute it.",
+      user:[
+        {label:"Primary", who:"GMs and owners at independent hotels and small groups",
+         note:"They check reviews when something feels off, which is already too late. They want the aggregate pushed to them."},
+        {label:"Secondary", who:"Ops managers acting on a specific complaint",
+         note:"They need the quote and the platform, not a sentiment score."},
+        {label:"Technical", who:"Anyone self-hosting it against their own sources",
+         note:"Swapping in a third platform should be one client class, not a rewrite."}
+      ],
+      landscape:{
+        rows:[
+          ["TrustYou", "Review aggregation, semantic analysis, competitor benchmarking", "~$0–2/room/mo"],
+          ["Revinate", "Reputation plus guest CRM, 100+ review sites, AI replies", "Quote only, premium"],
+          ["Birdeye", "Horizontal multi-location reputation, not hotel-specific", "$299–449/location/mo"],
+          ["GuestRevu", "Unified review inbox, real-time alerts, surveys", "~$0–2/room/mo"]
+        ],
+        gap:"Nothing in the category is self-hosted or developer-oriented. The only developer path is raw scraping infrastructure, which gives you data and zero workflow. An independent chooses between a per-room suite on an annual contract and nothing at all, and a three-property group sits below the floor where any of these make sense."
+      },
+      insight:"The ingestion is the product. One source sends stars as an integer and an ISO timestamp; the other sends \"4/5\" as a string, a US-format date, and sometimes no body. A second insight arrived from the alerting: a ratio alone cries wolf every week, because zero complaints to one reads as an infinite increase. Alerts need a volume floor before anyone will trust the digest enough to keep opening it.",
+      solution:"A normalization layer written to be forgiving of bad input and loud about what it discarded, handling six date formats and four rating conventions, dropping cross-source duplicates by content fingerprint, and reporting exactly what it threw away. Fetching retries with exponential backoff and full jitter, and skips a page that will not recover rather than failing the run, because a digest missing eleven reviews beats a digest that never sends. A theme is flagged at 1.8× its own trailing average on at least three mentions.",
+      next:[
+        "Response drafting, which is where the paid tools actually earn their money and where an operator's time really goes.",
+        "Per-property benchmarking. A 4.1 average means nothing without knowing what the property down the road is running.",
+        "A real evaluation of the lexicon tagger against hand-labelled reviews. I chose it for explainability and I have not measured what that costs in recall."
+      ],
+      stack:["Python","FastAPI","PostgreSQL","SQLAlchemy","httpx","pytest"]
+    }
   },
   {
     id:"photoculler", year:"2024 —", title:"Photo Culler", tag:"product", status:"shipped",
@@ -720,54 +753,81 @@ const ENTRIES = [
       stack:["Python","CLIP / open_clip","NumPy","Pillow","pytest"]
     }
   },
+
+  /* ---- Leadership & clubs ---- */
   {
-    id:"reviewradar", year:"2025 —", title:"Review Radar", tag:"product", status:"shipped",
-    sub:"Founder · Review aggregation service · Ithaca",
-    link:{label:"Open the working demo", url:"https://arnavsinghal.space/review-radar.html"},
-    lede:"Reviews live on platforms that disagree about everything — field names, rating scales, date formats, whether a body is required. This makes them agree, then says what changed.",
-    study:{
-      summary:"A scheduled service that pulls reviews from two platforms, normalizes them into one shape, tags what guests are complaining about, and sends a weekly digest that leads with whatever is getting worse.",
-      problem:"An independent property's reviews are scattered across platforms that each hold a partial picture. An operator checking them manually sees this week's reviews and nothing else, so a problem that has been building for a month reads as three unrelated complaints. Pattern lives in the aggregate and nobody has time to compute it.",
-      user:[
-        {label:"Primary", who:"GMs and owners at independent hotels and small groups",
-         note:"They check reviews when something feels off, which is already too late. They want the aggregate pushed to them."},
-        {label:"Secondary", who:"Ops managers acting on a specific complaint",
-         note:"They need the quote and the platform, not a sentiment score."},
-        {label:"Technical", who:"Anyone self-hosting it against their own sources",
-         note:"Swapping in a third platform should be one client class, not a rewrite."}
-      ],
-      landscape:{
-        rows:[
-          ["TrustYou", "Review aggregation, semantic analysis, competitor benchmarking", "~$0–2/room/mo"],
-          ["Revinate", "Reputation plus guest CRM, 100+ review sites, AI replies", "Quote only, premium"],
-          ["Birdeye", "Horizontal multi-location reputation, not hotel-specific", "$299–449/location/mo"],
-          ["GuestRevu", "Unified review inbox, real-time alerts, surveys", "~$0–2/room/mo"]
-        ],
-        gap:"Nothing in the category is self-hosted or developer-oriented. The only developer path is raw scraping infrastructure, which gives you data and zero workflow. An independent chooses between a per-room suite on an annual contract and nothing at all, and a three-property group sits below the floor where any of these make sense."
-      },
-      insight:"The ingestion is the product. One source sends stars as an integer and an ISO timestamp; the other sends \"4/5\" as a string, a US-format date, and sometimes no body. A second insight arrived from the alerting: a ratio alone cries wolf every week, because zero complaints to one reads as an infinite increase. Alerts need a volume floor before anyone will trust the digest enough to keep opening it.",
-      solution:"A normalization layer written to be forgiving of bad input and loud about what it discarded, handling six date formats and four rating conventions, dropping cross-source duplicates by content fingerprint, and reporting exactly what it threw away. Fetching retries with exponential backoff and full jitter, and skips a page that will not recover rather than failing the run, because a digest missing eleven reviews beats a digest that never sends. A theme is flagged at 1.8× its own trailing average on at least three mentions.",
-      next:[
-        "Response drafting, which is where the paid tools actually earn their money and where an operator's time really goes.",
-        "Per-property benchmarking. A 4.1 average means nothing without knowing what the property down the road is running.",
-        "A real evaluation of the lexicon tagger against hand-labelled reviews. I chose it for explainability and I have not measured what that costs in recall."
-      ],
-      stack:["Python","FastAPI","PostgreSQL","SQLAlchemy","httpx","pytest"]
-    }
-  },
-  {
-    id:"skyflow", year:"2025", title:"Skyflow", tag:"product", status:"archive",
-    sub:"Product Management Intern · Aug – Nov 2025 · Mountain View",
-    lede:"Owned the developer onboarding funnel for an API-first platform — the stretch between a developer's first sandbox call and their first production one, where most of them quietly gave up.",
+    id:"dti", year:"2026 —", title:"Cornell Digital Tech &amp; Innovation", tag:"product", status:"ongoing",
+    sub:"Business Analyst · Campus products reaching 17,000+ students",
+    lede:"Product work at real scale for a user base that is unusually willing to tell you exactly what is wrong.",
     blocks:[
       {h:"The work", ul:[
-        "Interviewed 15+ engineering teams to diagnose drop-off between sandbox and production, then shipped documentation revisions that cut time-to-first-API-call by roughly 35%.",
-        "Defined product requirements for PII and PCI detection in AI workflows, partnering with engineering to benchmark accuracy across 6 data types and prioritize fixes on the top 3 enterprise use cases.",
-        "Built usage dashboards tracking API adoption and retention across 30+ enterprise accounts, which reprioritized the quarterly roadmap and flagged 2 at-risk accounts ahead of renewal."
+        "Ran 15+ user interviews and usability tests, synthesizing findings into prioritized feature backlogs adopted by engineering teams.",
+        "Defined success metrics and launch strategy for two product releases, driving 2,000+ new student sign-ups in a single semester.",
+        "Built KPI dashboards tracking retention and engagement that now guide roadmap prioritization across three product teams."
       ]},
-      {h:"Outcome", metrics:[["~35%","faster to first API call"],["30+","enterprise accounts tracked"],["6","data types benchmarked"],["2","at-risk accounts caught"]]}
+      {h:"Reach", metrics:[["17,000+","students served"],["2,000+","sign-ups in one semester"],["3","product teams using the dashboards"]]}
     ]
+  },
+  {
+    id:"ibc", year:"2025 —", title:"Cornell International Business Consulting", tag:"strategy", status:"ongoing",
+    sub:"Analyst · Client market-entry engagement",
+    lede:"Selected from 100+ applicants through multi-round case interviews; now on a five-person client engagement.",
+    blocks:[{h:"The work", ul:[
+      "Built a market-entry model sizing a $40M+ TAM across three customer segments.",
+      "Presented final recommendations to client C-suite; two of four proposed initiatives were greenlit for the 2026 expansion roadmap, with a follow-on engagement."
+    ]}]
+  },
+  {
+    id:"cuabs", year:"2025 —", title:"Cornell Undergraduate Asia Business Society", tag:"strategy", status:"ongoing",
+    sub:"Analyst · Admitted at roughly a 5% acceptance rate",
+    lede:"Weekly client-style deliverables across global industries, plus a case competition win.",
+    blocks:[{h:"The work", p:"Led a four-person team to first place in the internal case competition with an APAC hospitality-tech market entry strategy, judged by industry professionals on market sizing, financial projections, go-to-market design, and delivery."}]
+  },
+  {
+    id:"fuhsd", year:"2024 – 25", title:"Student Board Representative", tag:"leadership", status:"archive",
+    sub:"Fremont Union High School District · 9,000 students across five schools",
+    lede:"Selected from 500+ applicants to be the student voice in front of the school board.",
+    blocks:[{h:"The work", p:"Represented 9,000 students across five schools and led six initiatives adopted district-wide."}]
+  },
+  {
+    id:"climate", year:"2023 – 25", title:"Fremont Union Climate Collective", tag:"leadership", status:"archive",
+    sub:"Co-founder &amp; President · Sunnyvale, CA",
+    lede:"A student climate organization that turned grant paperwork into an event 1,400 people showed up to.",
+    blocks:[
+      {h:"The work", ul:["Secured $60,000+ in funding across 20+ grant applications.","Produced an Earth Day event drawing 1,400+ attendees and 480 student projects.","Featured Congressman Ro Khanna and National Geographic alongside district and city partners."]},
+      {h:"Scale", metrics:[["$60,000+","raised"],["1,400+","attendees"],["480","student projects"]]}
+    ]
+  },
+  {
+    id:"w3b", year:"2021 – 25", title:"W3B Education", tag:"leadership", status:"archive",
+    sub:"Chief Growth Officer · Business, blockchain &amp; AI nonprofit",
+    lede:"Four years growing a student-run education nonprofit from a local idea into something with members on six continents.",
+    blocks:[
+      {h:"The work", ul:["Owned Instagram and LinkedIn growth strategy end to end.","Recruited 50+ corporate executives and 25+ professors as competition speakers and judges.","Raised $3,000+ in competition prizes."]},
+      {h:"Scale", metrics:[["2,000+","members"],["27","countries"],["75+","execs &amp; professors recruited"]]}
+    ]
+  },
+
+  /* ---- Photography ---- */
+  {
+    id:"commencement", year:"2026", title:"Commencement", tag:"photography", status:"shipped",
+    sub:"Photo series · Cornell graduation portraits, May 2026",
+    lede:"An afternoon of portraits that ran into golden hour, which is when it got good.",
+    blocks:[{h:"Note", p:"Shot on the A7 IV with the 24–70 GM II and graded in Lightroom. The frame shot into the sun is f/22 at 1/20 — stopped all the way down to hold the sunstar, slow enough that everyone had to stand still for it."}]
+  },
+  {
+    id:"overhead", year:"2026", title:"Overhead", tag:"photography", status:"shipped",
+    sub:"Photo study · High-angle street, July 2026",
+    lede:"A short study in looking down until a street stops being a scene and becomes a set of shapes.",
+    blocks:[{h:"Note", p:"Three frames, all at 70mm from above. Compression does most of the work: from that angle a car roof, a scooter and a pavement marking all sit on the same plane."}]
+  },
+  {
+    id:"sanfrancisco", year:"2025", title:"San Francisco", tag:"photography", status:"shipped",
+    sub:"Photo series · Street work across the city, February 2025",
+    lede:"Two days of walking. Chinatown, the Mission, the alleys off Market, and a BART car on the way home.",
+    blocks:[{h:"Note", p:"Shot on the Canon EOS R8 at f/4 almost throughout — one aperture all day, so the only thing left to decide was where to stand."}]
   }
+
 ];
 
 /* --- 5. INDEX TILE ARTWORK ------------------------------------------
@@ -785,6 +845,7 @@ const ENTRIES = [
 const TINT = {product:"rgba(37,99,235,.55)", building:"rgba(255,255,255,.20)", neutral:"rgba(255,255,255,.10)"};
 const MEDIA = {
   sidekick:     {kind:"logo", img:"logo_sidekick", word:"Sidekick"},
+  cocacola:     {kind:"type", word:"Coca-Cola Vietnam", note:"40+ provinces · 2027 planning", tint:TINT.product},
   sightline:    {kind:"img",  img:"sightline_hero", top:true, alt:"Sightline landing page reading “Cursor for Product Discovery”"},
   populationlab:{kind:"plate",img:"pop_fig", alt:"Research figure comparing simulated and real acceptance rates"},
   approval:     {kind:"type", word:"Approval Fabric", note:"Slack · GitHub · Jira", tint:TINT.product},
@@ -1025,6 +1086,20 @@ function openSheet(id){
   document.body.style.overflow = "hidden";
   sheet.querySelector(".sheet-close").focus();
 }
+/* ---------- id card: jumps into the index, and a clock ---------- */
+document.querySelectorAll(".idcard [data-open]").forEach(el => {
+  el.addEventListener("click", () => openSheet(el.dataset.open));
+});
+(function tick(){
+  const el = document.getElementById("clock");
+  if(!el) return;
+  const paint = () => {
+    el.textContent = new Date().toLocaleTimeString("en-US",
+      {timeZone:"America/New_York", hour:"2-digit", minute:"2-digit", second:"2-digit", hour12:true});
+  };
+  paint(); setInterval(paint, 1000);
+})();
+
 list.addEventListener("click", ev => {
   const tile = ev.target.closest(".tile");
   if(!tile) return;
