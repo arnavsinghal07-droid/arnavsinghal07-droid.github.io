@@ -57,6 +57,18 @@ else
   case "$reply" in [yY]*) ;; *) echo "stopped."; exit 0 ;; esac
 fi
 
+# ── 0. sync with GitHub first ──────────────────────────────────────────────
+# If the custom domain was set in the Pages UI, GitHub already committed a
+# CNAME file. Take that commit before writing our own, so the two do not
+# collide during the rebase in deploy.sh.
+if git -C "$HERE" remote get-url origin >/dev/null 2>&1; then
+  if git -C "$HERE" pull --rebase -q origin main 2>/dev/null; then
+    ok "synced with GitHub"
+  else
+    warn "could not fast-forward from GitHub; continuing"
+  fi
+fi
+
 # ── 1. the CNAME file ──────────────────────────────────────────────────────
 printf '%s\n' "$DOMAIN" > "$HERE/CNAME"
 ok "wrote CNAME → $DOMAIN"

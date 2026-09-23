@@ -68,6 +68,22 @@ if ! git remote get-url origin >/dev/null 2>&1; then
   fi
 fi
 
+# ── pick up anything changed on GitHub's side first ────────────────────────
+# Setting a custom domain in the Pages UI commits a CNAME file directly to the
+# repo, so the remote can be ahead of this folder.
+if git remote get-url origin >/dev/null 2>&1; then
+  if git fetch -q origin main 2>/dev/null && ! git merge-base --is-ancestor origin/main HEAD 2>/dev/null; then
+    if git rebase -q origin/main 2>/dev/null; then
+      ok "rebased onto changes made on GitHub"
+    else
+      git rebase --abort 2>/dev/null || true
+      bad "the remote has changes that conflict with this folder."
+      bad "run: git pull --rebase origin main   then re-run this script"
+      exit 1
+    fi
+  fi
+fi
+
 # ── push ───────────────────────────────────────────────────────────────────
 if git push -u origin main; then
   ok "pushed"
