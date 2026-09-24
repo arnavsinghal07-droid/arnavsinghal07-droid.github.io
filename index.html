@@ -247,6 +247,11 @@ figure img{width:100%;height:auto;object-fit:cover;display:block;transition:tran
 figure:hover img{transform:scale(1.03)}
 figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 12px 10px;background:linear-gradient(transparent,rgba(0,0,0,.8));font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.06em;color:#fff;opacity:0;transition:opacity .3s}
 figure:hover figcaption,figure:focus-within figcaption{opacity:1}
+.cl-wrap{position:relative}
+.cl-wrap.clipped{max-height:min(1180px,108vh);overflow:hidden}
+.cl-wrap.clipped::after{content:"";position:absolute;left:0;right:0;bottom:0;height:170px;background:linear-gradient(to bottom,rgba(255,255,255,0),var(--paper) 88%);pointer-events:none}
+.more{display:block;margin:6px auto 0;font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);background:none;border:1px solid var(--rule-strong);padding:11px 22px;cursor:pointer;transition:.2s}
+.more:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .ph{aspect-ratio:3/2;background:var(--surface);border:1px dashed var(--rule-strong);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
 
 /* ---------- motion ---------- */
@@ -526,6 +531,7 @@ const PHOTOS = [
 const CLUSTERS = [
   {name:"Photography", when:"", layout:"masonry",
    note:"",
+   clip:true,         // cut the cluster off with a fade + "see more". Remove to show all.
    shots:["p_wall","p_chinatown","p_carriage","p_shibuya_dusk","p_teamlab","p_diver","p_torii","p_lantern","p_class","p_caps","p_umbrellas","p_lighthouse","p_lastlight","p_watching","p_haneda","p_rain","p_stacks","p_swing","p_pathway","p_lift","p_tam","p_tower","p_stoles","p_crew","p_stage","p_court","p_cliffs","p_bagels","p_stadium","com_lawn","p_streamers","p_runway","p_walk"]},
 
   {name:"Me", when:"", layout:"masonry3",
@@ -921,7 +927,7 @@ shotsEl.addEventListener("click", e => {
 
 /* ---------- photograph clusters ---------- */
 const clusterList = document.getElementById("cluster-list");
-clusterList.innerHTML = CLUSTERS.map(c => {
+clusterList.innerHTML = CLUSTERS.map((c, ci) => {
   const cells = c.shots.map(key => {
     if(!key) return `<div class="ph">Frame to come</div>`;
     const p = PHOTOS.find(x => x.img === key);
@@ -931,14 +937,29 @@ clusterList.innerHTML = CLUSTERS.map(c => {
       <figcaption>${p.title}</figcaption>
     </figure>`;
   }).join("");
+  const box = c.layout === "grid" ? "cl-grid"
+            : (c.layout === "masonry3" ? "cl-masonry cols3" : "cl-masonry");
   return `<div class="cluster">
     <div class="cl-head">
       <h3>${c.name}</h3>${c.when ? `<span class="when">${c.when}</span>` : ""}
       <p>${c.note}</p>
     </div>
-    <div class="${c.layout === "grid" ? "cl-grid" : (c.layout === "masonry3" ? "cl-masonry cols3" : "cl-masonry")}">${cells}</div>
+    <div class="cl-wrap${c.clip ? " clipped" : ""}" data-box="${ci}">
+      <div class="${box}">${cells}</div>
+    </div>
+    ${c.clip ? `<button class="more" type="button" data-c="${ci}" aria-expanded="false">Click to see more</button>` : ""}
   </div>`;
 }).join("");
+
+clusterList.addEventListener("click", e => {
+  const btn = e.target.closest(".more");
+  if(!btn) return;
+  const wrap = clusterList.querySelector(`[data-box="${btn.dataset.c}"]`);
+  const open = wrap.classList.toggle("clipped") === false;
+  btn.setAttribute("aria-expanded", String(open));
+  btn.textContent = open ? "Show fewer" : "Click to see more";
+  if(!open) wrap.scrollIntoView({block:"start", behavior:"smooth"});
+});
 
 clusterList.addEventListener("click", e => {
   const fig = e.target.closest("figure");
