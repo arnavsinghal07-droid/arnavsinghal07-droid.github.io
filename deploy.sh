@@ -26,6 +26,12 @@ if [ -f "$SRC/arnav-singhal.html" ]; then
   cp "$SRC/arnav-singhal.html" index.html
   cp "$SRC/photo-culler.html"  photo-culler.html
   cp "$SRC/review-radar.html"  review-radar.html
+  if [ -d "$SRC/clips" ]; then
+    mkdir -p clips
+    find "$SRC/clips" -maxdepth 1 -type f \( -name '*.mp4' -o -name '*.webm' \) -exec cp {} clips/ \; 2>/dev/null || true
+    n="$(find clips -maxdepth 1 -type f 2>/dev/null | wc -l | tr -d ' ')"
+    [ "$n" != "0" ] && ok "copied $n clip(s)"
+  fi
   ok "copied the latest build from portfolio-site"
 else
   warn "no build found at $SRC — pushing whatever is already in this folder"
