@@ -26,6 +26,10 @@ if [ -f "$SRC/arnav-singhal.html" ]; then
   cp "$SRC/arnav-singhal.html" index.html
   cp "$SRC/photo-culler.html"  photo-culler.html
   cp "$SRC/review-radar.html"  review-radar.html
+  if [ -f "$SRC/resume.pdf" ]; then
+    cp "$SRC/resume.pdf" resume.pdf
+    ok "copied resume.pdf"
+  fi
   if [ -d "$SRC/clips" ]; then
     mkdir -p clips
     find "$SRC/clips" -maxdepth 1 -type f \( -name '*.mp4' -o -name '*.webm' \) -exec cp {} clips/ \; 2>/dev/null || true

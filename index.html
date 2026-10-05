@@ -157,6 +157,7 @@ main > section{padding-block:clamp(22px,3vh,34px)}
 .ttl{font-family:var(--display);font-weight:500;font-size:clamp(17px,2vw,22px);line-height:1.14;letter-spacing:-.025em;text-transform:uppercase}
 .yr{font-size:10px;color:var(--muted);letter-spacing:.1em;font-variant-numeric:tabular-nums;white-space:nowrap}
 .sub{font-size:13px;line-height:1.5;color:var(--muted);max-width:44ch}
+.mchip{font-family:var(--mono);font-size:9.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);line-height:1.5}
 .tag{font-size:9.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
 
 /* ---------- detail sheet ---------- */
@@ -213,6 +214,9 @@ main > section{padding-block:clamp(22px,3vh,34px)}
 .gap{font-size:14px;color:var(--ink);background:var(--blue-soft);border-left:2px solid var(--blue);padding:12px 15px;margin:0}
 .gap b{color:var(--blue);font-weight:600}
 
+.repo-link{display:inline-flex;align-items:center;gap:9px;width:fit-content;font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-decoration:none;color:var(--ink);border:1px solid var(--rule-strong);padding:10px 14px;transition:.2s}
+.repo-link:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.repo-link svg{width:14px;height:14px;flex:none}
 .demo-link{display:inline-flex;align-items:center;gap:9px;width:fit-content;font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:#fff;background:var(--blue);padding:12px 17px;transition:.2s}
 .demo-link:hover{background:var(--ink)}
 .demo-link svg{width:12px;height:12px;flex:none}
@@ -281,6 +285,8 @@ figure:hover figcaption,figure:focus-within figcaption{opacity:1}
 .facts div{padding:14px 0;border-bottom:1px solid var(--rule)}
 .facts dt{font-size:9.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:6px}
 .facts dd{margin:0;font-size:14px;line-height:1.55;color:var(--ink)}
+.facts dd a.dl{color:var(--ink);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;transition:opacity .18s}
+.facts dd a.dl:hover{opacity:.55}
 
 /* ---------- contact ---------- */
 .contact{border-top:1px solid var(--ink)}
@@ -338,7 +344,7 @@ figure:hover figcaption,figure:focus-within figcaption{opacity:1}
       <div class="idcard">
         <div class="idcard-l">
           <h1>Arnav Singhal</h1>
-          <p class="idrow"><b>Currently:</b> Founding product engineer at <button class="jump" data-open="sidekick">Sidekick</button> (YC S26). Hotel Administration at Cornell '28, minors in CS and Statistics.</p>
+          <p class="idrow"><b>Currently:</b> Founding Engineer at <button class="jump" data-open="sidekick">Sidekick</button> (YC S26). Hotel Administration at Cornell '28, minors in CS and Statistics.</p>
           <p class="idrow"><b>Previously:</b> <button class="jump" data-open="cocacola">Coca-Cola</button>, <button class="jump" data-open="adobe">Adobe</button>, <button class="jump" data-open="skyflow">Skyflow</button> and <button class="jump" data-open="gimme">Gimme! Coffee</button>.</p>
           <p class="idrow"><b>Also building:</b> <button class="jump" data-open="sightline">Sightline</button>, <button class="jump" data-open="populationlab">PopulationLab</button> and <button class="jump" data-open="photoculler">Photo Culler</button>.</p>
           <p class="idrow"><b>Talk to me about:</b> the Golden State Warriors, photography, chess, Hunter x Hunter, startups, baking, and trying out different latte flavors and matcha recipes.</p>
@@ -360,7 +366,7 @@ figure:hover figcaption,figure:focus-within figcaption{opacity:1}
   <section class="wrap" id="currently">
     <div class="sec-head"><h2>Currently</h2><p class="sec-note">Sept 2026</p></div>
     <dl class="now">
-      <div><dt>Shipping</dt><dd><b>Sidekick</b> — owning roadmap and ship cadence across a five-person team, now past $150K ARR.</dd></div>
+      <div><dt>Shipping</dt><dd><b>Sidekick</b> — first engineering hire, past $150K ARR, closed a $1M seed at a $15M post-money valuation.</dd></div>
       <div><dt>Building</dt><dd><b>Sightline</b> — an AI-native discovery tool for PMs, and the WAT architecture underneath it.</dd></div>
       <div><dt>Researching</dt><dd><b>PopulationLab</b> — whether LLM-simulated populations actually reproduce real human behavior.</dd></div>
       <div><dt>Shooting</dt><dd>Portraits and street work on the A7 IV and the R8. Roughly 5,400 raw frames in the archive.</dd></div>
@@ -397,6 +403,7 @@ figure:hover figcaption,figure:focus-within figcaption{opacity:1}
         <p>Hi! My name is Arnav and I am a student at Cornell University studying business and minoring in CS and Stats. I love building random side projects and pulling apart other people’s products to work out why they do or don’t click. In my free time I love to watch and play basketball while shooting random photos.</p>
       </div>
       <dl class="facts">
+        <div><dt>Résumé</dt><dd><a class="dl" href="resume.pdf" target="_blank" rel="noopener">Download the PDF</a></dd></div>
         <div><dt>Education</dt><dd>Cornell University, Nolan School of Hotel Administration — B.S. Hotel Administration, minors in Computer Science and Statistics. Expected May 2028.</dd></div>
         <div><dt>Product</dt><dd>User research &amp; discovery · market sizing · competitive analysis · UX benchmarking · survey design · roadmap prioritization</dd></div>
         <div><dt>Technical</dt><dd>Python · TypeScript / Next.js · Supabase &amp; Postgres · vector search &amp; RAG · generative AI prototyping and evaluation · financial modeling · Adobe Creative Suite</dd></div>
@@ -415,12 +422,13 @@ figure:hover figcaption,figure:focus-within figcaption{opacity:1}
         <a href="https://linkedin.com/in/arnav-singhal0" target="_blank" rel="noopener">LinkedIn</a>
         <a href="https://github.com/arnavsinghal07-droid" target="_blank" rel="noopener">GitHub</a>
         <a href="https://www.instagram.com/arnav.s.inghal/" target="_blank" rel="noopener">Instagram</a>
+        <a href="resume.pdf" target="_blank" rel="noopener">Résumé</a>
       </div>
       <p class="colophon">
         Arnav Singhal · 2026<br>
         Set in IBM Plex Mono, IBM Plex Sans &amp; Helvetica<br>
         Frames shot on Sony &amp; Canon · Graded in Lightroom<br>
-        Index last updated September 2026
+        Index last updated October 2026
       </p>
     </div>
   </section>
@@ -560,8 +568,9 @@ const MOTION = [
 const ENTRIES = [
   /* ---- Work — roles ---- */
   {
-    id:"sidekick", year:"2025 —", title:"Sidekick", tag:"product", status:"shipped",
-    sub:"Founding Product Engineer · Y Combinator S26 · San Jose",
+    id:"sidekick", year:"2025 —", title:"Sidekick", tag:"product", status:"building",
+    sub:"Founding Engineer · First engineering hire · Y Combinator S26",
+    chip:"$1M seed at $15M · 12 paying customers",
     lede:"An AI assistant that reaches frontline hotel staff over SMS, where they already are, rather than in one more dashboard nobody opens mid-shift.",
     study:{
       summary:"Founding product engineer on an AI assistant for hotel operations teams. I own the roadmap, the weekly ship cadence, and features end to end across a five-person team. The product is live at twelve properties and past $150K ARR.",
@@ -596,7 +605,8 @@ const ENTRIES = [
   },
   {
     id:"cocacola", year:"2026", title:"Coca-Cola", tag:"product", status:"shipped",
-    sub:"Market expansion intelligence · 2027 commercial planning",
+    sub:"Product &amp; Strategy Consultant · Distribution scoring model for 2027 commercial planning",
+    chip:"40+ provinces · 5 data sources",
     lede:"A province-level opportunity-scoring tool for Coca-Cola Vietnam's commercial team, built to replace an expansion-planning process that had no shared view of the market.",
     study:{
       summary:"A market-expansion intelligence MVP covering all 40+ Vietnamese provinces, built for Coca-Cola Vietnam's commercial team and adopted for their 2027 distribution planning. It scores each province on opportunity, lets teams drill into the markets underneath, and stress-tests priorities against four forward scenarios.",
@@ -619,7 +629,7 @@ const ENTRIES = [
   },
   {
     id:"adobe", year:"2026", title:"Adobe", tag:"strategy", status:"archive",
-    sub:"AI / Strategy Consultant (Contract) · Jan – Apr 2026 · San Jose",
+    sub:"AI / Strategy Consultant (Contract) · Jan – Apr 2026",
     lede:"Advised IT leadership at Fortune 500 client firms on enterprise AI product strategy across four engagements.",
     blocks:[{h:"The work", ul:[
       "Built market-sizing frameworks, UX benchmarks, and competitive positioning analyses shaping adoption decisions tied to $1M+ contracts.",
@@ -628,7 +638,7 @@ const ENTRIES = [
   },
   {
     id:"gimme", year:"2025 – 26", title:"Gimme! Coffee", tag:"strategy", status:"archive",
-    sub:"Growth Strategy Consultant (Contract) · Oct 2025 – Apr 2026 · Ithaca",
+    sub:"Growth Strategy Consultant · Oct 2025 – Apr 2026",
     lede:"A local roaster with eighteen months of sales data nobody had read carefully and a bakery lineup shaped by habit rather than demand.",
     blocks:[{h:"The work", ul:[
       "Analyzed 18 months of historical bakery sales to find top performers and gaps, delivering a prioritized roadmap of product development opportunities to leadership.",
@@ -638,7 +648,8 @@ const ENTRIES = [
   },
   {
     id:"skyflow", year:"2025", title:"Skyflow", tag:"product", status:"archive",
-    sub:"Product Management Intern · Aug – Nov 2025 · Mountain View",
+    sub:"Product Management Intern · Developer onboarding for an API-first data privacy platform",
+    chip:"35% faster time-to-first-API-call · 15+ teams interviewed",
     lede:"Owned the developer onboarding funnel for an API-first platform — the stretch between a developer's first sandbox call and their first production one, where most of them quietly gave up.",
     blocks:[
       {h:"The work", ul:[
@@ -653,7 +664,8 @@ const ENTRIES = [
   /* ---- Work — things I built ---- */
   {
     id:"sightline", year:"2026", title:"Sightline", tag:"product", status:"building",
-    sub:"Co-founder · AI-native product discovery — “Cursor for Product Managers”",
+    sub:"Co-founder · AI-native product discovery, “Cursor for Product Managers”",
+    repo:"sightline",
     lede:"A queryable, living knowledge base of customer signal that answers PM questions with the evidence still attached, and turns the answer into a structured feature brief.",
     study:{
       summary:"An AI-native discovery tool for product managers. It ingests call transcripts, support tickets, usage data, NPS and competitor reviews, answers discovery questions against that corpus with citations back to source, and turns an answer into a feature brief.",
@@ -686,8 +698,10 @@ const ENTRIES = [
     }
   },
   {
-    id:"populationlab", year:"2026", title:"PopulationLab", tag:"research", status:"shipped",
-    sub:"Independent research · Evaluation framework for synthetic populations",
+    id:"populationlab", year:"2024 —", title:"PopulationLab", tag:"research", status:"building",
+    sub:"Independent research · Do LLM-simulated populations reproduce real human survey behavior?",
+    chip:"4 demographic segments · 30+ repeated runs",
+    repo:"populationlab",
     lede:"Companies increasingly claim LLM-simulated populations can replace surveys. That is a measurement question, and most demos skip the measurement. This is the harness I wanted to see.",
     blocks:[
       {h:"The setup", p:"12,079 real accept/decline decisions from a public behavioral study. Every respondent rebuilt as an LLM agent grounded in their observed attributes, then simulated against held-out ground truth, information-matched classical baselines, and paired significance tests. Leakage controlled by fingerprinting 567 pseudo-respondents into grouped splits. Runs end to end on a laptop with a local open-weight 3B model: no API keys, no cost, every number reproducible."},
@@ -705,6 +719,8 @@ const ENTRIES = [
   {
     id:"approval", year:"2026", title:"Approval Fabric", tag:"product", status:"building",
     sub:"B2B SaaS · Structured, provable approvals across Slack, GitHub &amp; Jira",
+    chip:"Slack · GitHub · Jira",
+    repo:"approval-fabric",
     lede:"Engineering and product launches get approved in Slack threads nobody can reconstruct three months later. This makes the approval a real record.",
     study:{
       summary:"B2B SaaS that enforces structured, provable approvals across Slack, GitHub and Jira. A trigger opens an approval request, approvers sign off in Slack with evidence attached, and every approval binds to a commit SHA so it cannot drift off what it approved.",
@@ -738,7 +754,9 @@ const ENTRIES = [
   },
   {
     id:"reviewradar", year:"2025 —", title:"Review Radar", tag:"product", status:"shipped",
-    sub:"Founder · Review aggregation service · Ithaca",
+    sub:"Founder · Nightly review aggregation across two external APIs",
+    chip:"FastAPI · Postgres · 2 live APIs",
+    repo:"review-radar",
     link:{label:"Open the working demo", url:"https://arnavsinghal.space/review-radar.html"},
     lede:"Reviews live on platforms that disagree about everything — field names, rating scales, date formats, whether a body is required. This makes them agree, then says what changed.",
     study:{
@@ -772,8 +790,10 @@ const ENTRIES = [
     }
   },
   {
-    id:"photoculler", year:"2024 —", title:"Photo Culler", tag:"product", status:"shipped",
-    sub:"Founder · AI photo culling · San Jose",
+    id:"photoculler", year:"2025 —", title:"Photo Culler", tag:"product", status:"shipped",
+    sub:"Founder · CLIP-based culling for photographers working large libraries",
+    chip:"60% faster · under 2% false rejects",
+    repo:"photo-culler",
     link:{label:"Open the working demo", url:"https://arnavsinghal.space/photo-culler.html"},
     lede:"A tool for the problem I actually have: thousands of raw frames off a single shoot, most of them near-identical, and no fast way to find the one worth editing.",
     study:{
@@ -809,8 +829,9 @@ const ENTRIES = [
 
   /* ---- Leadership & clubs ---- */
   {
-    id:"dti", year:"2026 —", title:"Cornell Digital Tech &amp; Innovation", tag:"product", status:"ongoing",
-    sub:"Business Analyst · Campus products reaching 17,000+ students",
+    id:"dti", year:"2025 —", title:"Cornell Digital Tech &amp; Innovation", tag:"product", status:"ongoing",
+    sub:"Analyst · Campus products reaching 17,000+ students",
+    chip:"15+ usability tests · 2 launches",
     lede:"Product work at real scale for a user base that is unusually willing to tell you exactly what is wrong.",
     blocks:[
       {h:"The work", ul:[
@@ -832,19 +853,22 @@ const ENTRIES = [
   },
   {
     id:"cuabs", year:"2025 —", title:"Cornell Undergraduate Asia Business Society", tag:"strategy", status:"ongoing",
-    sub:"Analyst · Admitted at roughly a 5% acceptance rate",
+    sub:"Analyst · Market coverage and research across Asia-Pacific",
+    chip:"190+ applicants · First place",
     lede:"Weekly client-style deliverables across global industries, plus a case competition win.",
     blocks:[{h:"The work", p:"Led a four-person team to first place in the internal case competition with an APAC hospitality-tech market entry strategy, judged by industry professionals on market sizing, financial projections, go-to-market design, and delivery."}]
   },
   {
     id:"fuhsd", year:"2024 – 25", title:"Student Board Representative", tag:"leadership", status:"archive",
     sub:"Fremont Union High School District · 9,000 students across five schools",
+    chip:"9,000 students · 5 schools",
     lede:"Selected from 500+ applicants to be the student voice in front of the school board.",
     blocks:[{h:"The work", p:"Represented 9,000 students across five schools and led six initiatives adopted district-wide."}]
   },
   {
     id:"climate", year:"2023 – 25", title:"Fremont Union Climate Collective", tag:"leadership", status:"archive",
     sub:"Co-founder &amp; President · Sunnyvale, CA",
+    chip:"$60K raised · 1,400 attendees",
     lede:"A student climate organization that turned grant paperwork into an event 1,400 people showed up to.",
     blocks:[
       {h:"The work", ul:["Secured $60,000+ in funding across 20+ grant applications.","Produced an Earth Day event drawing 1,400+ attendees and 480 student projects.","Featured Congressman Ro Khanna and National Geographic alongside district and city partners."]},
@@ -853,7 +877,8 @@ const ENTRIES = [
   },
   {
     id:"w3b", year:"2021 – 25", title:"W3B Education", tag:"leadership", status:"archive",
-    sub:"Chief Growth Officer · Business, blockchain &amp; AI nonprofit",
+    sub:"Chief Growth Officer · Business, blockchain and AI education nonprofit",
+    chip:"2,000+ members · 27 countries",
     lede:"Four years growing a student-run education nonprofit from a local idea into something with members on six continents.",
     blocks:[
       {h:"The work", ul:["Owned Instagram and LinkedIn growth strategy end to end.","Recruited 50+ corporate executives and 25+ professors as competition speakers and judges.","Raised $3,000+ in competition prizes."]},
@@ -985,8 +1010,9 @@ function mediaMarkup(e){
   const m = MEDIA[e.id] || {kind:"type", word:e.title, note:e.tag, tint:TINT.neutral};
   const chip = `<span class="status s-${e.status}">${STATUS_LABEL[e.status]}</span>`;
   if(m.kind === "type"){
+    const note = e.chip || m.note || e.tag;
     return `<div class="media type" style="--tint:${m.tint}">${chip}
-      <span class="plate-word"><b>${m.word}</b><span class="plate-rule"></span><i>${m.note}</i></span></div>`;
+      <span class="plate-word"><b>${m.word}</b><span class="plate-rule"></span><i>${note}</i></span></div>`;
   }
   if(m.kind === "logo"){
     return `<div class="media logo">${chip}
@@ -1063,6 +1089,7 @@ list.innerHTML = ENTRIES.map(e => `
     <span class="cap">
       <span class="cap-top"><span class="ttl">${e.title}</span><span class="yr">${e.year}</span></span>
       <span class="sub">${e.sub}</span>
+      ${e.chip ? `<span class="mchip">${e.chip}</span>` : ""}
       <span class="tag">${e.tag}</span>
     </span>
   </button>`).join("");
@@ -1102,6 +1129,10 @@ function openSheet(id){
           ${e.link ? `<a class="demo-link" href="${e.link.url}" target="_blank" rel="noopener">
               <span>${e.link.label}</span>
               <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 11 11 3M5 3h6v6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+            </a>` : ""}
+          ${e.repo ? `<a class="repo-link" href="https://github.com/arnavsinghal07-droid/${e.repo}" target="_blank" rel="noopener">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.49-2.7-1.07-2.7-1.07-.36-.93-.89-1.18-.89-1.18-.73-.5.06-.49.06-.49.81.06 1.23.83 1.23.83.72 1.23 1.88.87 2.34.67.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+              <span>github.com/arnavsinghal07-droid/${e.repo}</span>
             </a>` : ""}
           ${e.study ? renderStudy(e.study) : ""}
           ${(e.blocks || []).map(renderBlock).join("")}
